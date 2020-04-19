@@ -973,6 +973,10 @@ internal class DefaultCryptoService @Inject constructor(
         warnOnUnknownDevicesRepository.setWarnOnUnknownDevices(warn)
     }
 
+    override fun getWarnOnUnknownDevices(): Boolean {
+        return warnOnUnknownDevicesRepository.warnOnUnknownDevices()
+    }
+
     /**
      * Check if the user ids list have some unknown devices.
      * A success means there is no unknown devices.

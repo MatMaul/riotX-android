@@ -120,4 +120,6 @@ interface SendService {
      * Resend all failed messages one by one (and keep order)
      */
     fun resendAllFailedMessages()
+
+    fun sendEvent(event: Event): Cancelable
 }

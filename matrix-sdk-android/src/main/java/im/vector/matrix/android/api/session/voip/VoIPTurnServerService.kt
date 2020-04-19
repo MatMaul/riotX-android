@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package im.vector.matrix.android.api.session.room.model.call
+package im.vector.matrix.android.api.session.voip
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+/**
+ * This interface defines a method to retrieve the VoIP Turn Servers
+ */
+interface VoIPTurnServerService {
 
-@JsonClass(generateAdapter = true)
-data class CallHangupContent(
-        @Json(name = "call_id") val callId: String,
-        @Json(name = "version") val version: Int,
-        @Json(name = "reason") val reason: String
-)
+    /**
+     * Get the Turn Servers config
+     */
+    fun getTurnServer(): TurnServer
+}

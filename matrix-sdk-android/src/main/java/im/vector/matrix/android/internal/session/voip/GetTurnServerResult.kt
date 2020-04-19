@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 New Vector Ltd
+ * Copyright (c) 2020 New Vector Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,20 @@
  * limitations under the License.
  */
 
-package im.vector.matrix.android.api.session.room.model.call
+package im.vector.matrix.android.internal.session.voip
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import im.vector.matrix.android.api.extensions.orTrue
+
+/**
+ * Ref: https://matrix.org/docs/spec/client_server/latest#get-matrix-client-r0-voip-turnserver
+ */
 
 @JsonClass(generateAdapter = true)
-data class CallHangupContent(
-        @Json(name = "call_id") val callId: String,
-        @Json(name = "version") val version: Int,
-        @Json(name = "reason") val reason: String
+internal data class GetTurnServerResult(
+        @Json(name = "username") val username: String,
+        @Json(name = "password") val password: String,
+        @Json(name = "uris") val uris: List<String>,
+        @Json(name = "ttl") val ttl: Int
 )

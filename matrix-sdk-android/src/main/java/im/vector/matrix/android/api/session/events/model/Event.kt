@@ -27,15 +27,16 @@ import im.vector.matrix.android.internal.crypto.algorithms.olm.OlmDecryptionResu
 import im.vector.matrix.android.internal.di.MoshiProvider
 import org.json.JSONObject
 import timber.log.Timber
+import kotlin.reflect.KClass
 
 typealias Content = JsonDict
 
 /**
  * This methods is a facility method to map a json content to a model.
  */
-inline fun <reified T> Content?.toModel(catchError: Boolean = true): T? {
+fun <T: Any> Content?.toModel(_class: Class<T>, catchError: Boolean = true): T? {
     val moshi = MoshiProvider.providesMoshi()
-    val moshiAdapter = moshi.adapter(T::class.java)
+    val moshiAdapter = moshi.adapter(_class)
     return try {
         moshiAdapter.fromJsonValue(this)
     } catch (e: Exception) {
@@ -48,14 +49,23 @@ inline fun <reified T> Content?.toModel(catchError: Boolean = true): T? {
     }
 }
 
+inline fun <reified T: Any> Content?.toModel(catchError: Boolean = true): T? {
+    return this.toModel(T::class.java, catchError)
+}
+
 /**
  * This methods is a facility method to map a model to a json Content
  */
 @Suppress("UNCHECKED_CAST")
-inline fun <reified T> T.toContent(): Content {
+fun <T: Any> T.toContent(_class: Class<T>): Content {
     val moshi = MoshiProvider.providesMoshi()
-    val moshiAdapter = moshi.adapter(T::class.java)
+    val moshiAdapter = moshi.adapter(_class)
     return moshiAdapter.toJsonValue(this) as Content
+}
+
+@Suppress("UNCHECKED_CAST")
+inline fun <reified T: Any> T.toContent(): Content {
+    return this.toContent(T::class.java);
 }
 
 /**
@@ -209,6 +219,16 @@ fun Event.isTextMessage(): Boolean {
         MessageType.MSGTYPE_TEXT,
         MessageType.MSGTYPE_EMOTE,
         MessageType.MSGTYPE_NOTICE -> true
+        else                       -> false
+    }
+}
+
+fun Event.isCallEvent(): Boolean {
+    return when (getClearType()) {
+        EventType.CALL_INVITE,
+        EventType.CALL_ANSWER,
+        EventType.CALL_HANGUP,
+        EventType.CALL_CANDIDATES -> true
         else                       -> false
     }
 }

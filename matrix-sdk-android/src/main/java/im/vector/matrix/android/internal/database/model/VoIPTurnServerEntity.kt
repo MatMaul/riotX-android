@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 New Vector Ltd
+ * Copyright (c) 2020 New Vector Ltd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-package im.vector.matrix.android.api.session.room.model.call
+package im.vector.matrix.android.internal.database.model
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import im.vector.matrix.android.api.session.homeserver.HomeServerCapabilities
+import io.realm.RealmObject
 
-@JsonClass(generateAdapter = true)
-data class CallHangupContent(
-        @Json(name = "call_id") val callId: String,
-        @Json(name = "version") val version: Int,
-        @Json(name = "reason") val reason: String
-)
+internal open class VoIPTurnServerEntity(
+        var username: String?,
+        var password: String?,
+        var uris: List<String>?,
+        var ttl: Int?,
+        var lastUpdatedTimestamp: Long = 0L
+) : RealmObject() {
+
+    companion object
+}

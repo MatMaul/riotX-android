@@ -24,6 +24,7 @@ data class CallAnswerContent(
         @Json(name = "call_id") val callId: String,
         @Json(name = "version") val version: Int,
         @Json(name = "answer") val answer: Answer
+        // TODO check lifetime ?
 ) {
 
     @JsonClass(generateAdapter = true)

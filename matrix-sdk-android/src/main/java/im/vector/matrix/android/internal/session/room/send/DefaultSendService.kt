@@ -95,7 +95,7 @@ internal class DefaultSendService @AssistedInject constructor(
         return sendEvent(event)
     }
 
-    private fun sendEvent(event: Event): Cancelable {
+    override fun sendEvent(event: Event): Cancelable {
         // Encrypted room handling
         return if (cryptoService.isRoomEncrypted(roomId)) {
             Timber.v("Send event in encrypted room")

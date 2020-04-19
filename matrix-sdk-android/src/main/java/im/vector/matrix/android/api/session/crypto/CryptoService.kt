@@ -62,6 +62,8 @@ interface CryptoService {
 
     fun setWarnOnUnknownDevices(warn: Boolean)
 
+    fun getWarnOnUnknownDevices(): Boolean
+
     fun setDeviceVerification(trustLevel: DeviceTrustLevel, userId: String, deviceId: String)
 
     fun getUserDevices(userId: String): MutableList<CryptoDeviceInfo>
